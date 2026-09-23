@@ -379,10 +379,12 @@ func TestClosestEdgeQueryShapeIndexTargetOptimizedMatchesBruteForce(t *testing.T
 	bruteForce := resultShapeIDs(true)
 	optimized := resultShapeIDs(false)
 
-	// Shape 0 (quad B) is ~11 m from the target, within the 20 m limit. If
-	// even brute force misses it the fixture itself is broken.
-	if !bruteForce[0] {
-		t.Fatalf("brute-force search did not return shape 0 (~11 m from target, limit 20 m); fixture is broken")
+	// Shape 0 (quad B) is ~11 m from the target, within the 20 m limit.
+	const targetShapeID = 0
+
+	// If even brute force misses targetShapeID the fixture itself is broken.
+	if !bruteForce[targetShapeID] {
+		t.Fatalf("brute-force search did not return shape %d (~11 m from target, limit 20 m); fixture is broken", targetShapeID)
 	}
 
 	for id := range bruteForce {
